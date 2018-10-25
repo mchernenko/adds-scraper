@@ -1,0 +1,76 @@
+image: tiangolo/docker-with-compose
+
+before_script:
+  - docker login -u gitlab-ci-token -p $CI_JOB_TOKEN $CI_REGISTRY
+  - pip install docker-auto-labels
+
+stages:
+  - test
+  - build
+  - deploy
+
+tests:
+  stage: test
+  script:
+    - sh ./script-test.sh
+  tags:
+    - build
+    - test
+
+build-stag:
+  stage: build
+  script:
+    - TAG=stag FRONTEND_ENV=stag sh ./script-build-push.sh
+  only:
+    - master
+  tags:
+    - build
+    - test
+    
+build-prod:
+  stage: build
+  script:
+    - TAG=prod sh ./script-build-push.sh
+  only:
+    - production
+  tags:
+    - build
+    - test
+
+deploy-stag:
+  stage: deploy
+  script: 
+    - >
+      DOMAIN=stag.adds-scraper.com
+      TRAEFIK_TAG=stag.adds-scraper.com
+      TRAEFIK_PUBLIC_TAG=traefik-public
+      STACK_NAME=stag-adds-scraper-com
+      TAG=stag
+      sh ./script-deploy.sh
+  environment:
+    name: staging
+    url: https://stag.adds-scraper.com
+  only:
+    - master
+  tags:
+    - swarm
+    - stag
+
+deploy-prod:
+  stage: deploy
+  script:
+    - >
+      DOMAIN=adds-scraper.com
+      TRAEFIK_TAG=adds-scraper.com
+      TRAEFIK_PUBLIC_TAG=traefik-public
+      STACK_NAME=adds-scraper-com
+      TAG=prod
+      sh ./script-deploy.sh
+  environment:
+    name: production
+    url: https://adds-scraper.com
+  only:
+    - production
+  tags:
+    - swarm
+    - prod

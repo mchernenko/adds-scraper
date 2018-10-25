@@ -1,0 +1,8 @@
+version: '3'
+services:
+  backend:
+    image: 'mchernenko/adds-scraper/backend:${TAG-latest}'
+  celeryworker:
+    image: 'mchernenko/adds-scraper/celeryworker:${TAG-latest}'
+  frontend:
+    image: 'mchernenko/adds-scraper/frontend:${TAG-latest}'

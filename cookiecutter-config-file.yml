@@ -1,0 +1,28 @@
+default_context:
+  project_name: 'adds-scraper'
+  project_slug: 'adds-scraper'
+  domain_main: 'adds-scraper.com'
+  domain_staging: 'stag.adds-scraper.com'
+  domain_dev: 'dev.adds-scraper.com'
+  docker_swarm_stack_name_main: 'adds-scraper-com'
+  docker_swarm_stack_name_staging: 'stag-adds-scraper-com'
+  secret_key: '0c3a0e69406a6f671b94f1f72baf8e4d3a3ecd3f0c3e9a81557b0e245a7051a4'
+  first_superuser: 'admin@adds-scraper.com'
+  first_superuser_password: 'asd123Q'
+  postgres_password: 'asd123Q'
+  pgadmin_default_user: 'admin@adds-scraper.com'
+  pgadmin_default_user_password: 'asd123Q'
+  traefik_constraint_tag: 'adds-scraper.com'
+  traefik_constraint_tag_staging: 'stag.adds-scraper.com'
+  traefik_public_network: 'traefik-public'
+  traefik_public_constraint_tag: 'traefik-public'
+  flower_auth: 'root:asd123Q'
+  sentry_dsn: ''
+  docker_image_prefix: 'mchernenko/adds-scraper/'
+  docker_image_backend: 'mchernenko/adds-scraper/backend'
+  docker_image_celeryworker: 'mchernenko/adds-scraper/celeryworker'
+  docker_image_frontend: 'mchernenko/adds-scraper/frontend'
+  _copy_without_render:
+    - frontend/src/**/*.html
+    - frontend/node_modules/*
+  _template: ./

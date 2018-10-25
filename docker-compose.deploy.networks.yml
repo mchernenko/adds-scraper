@@ -1,0 +1,18 @@
+version: '3'
+services:
+  pgadmin:
+    networks:
+      - traefik-public
+      - default
+  proxy:
+    networks:
+      - traefik-public
+      - default
+  flower:
+    networks:
+      - traefik-public
+      - default
+
+networks:
+  traefik-public:
+    external: true
